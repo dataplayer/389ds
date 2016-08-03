@@ -1,19 +1,17 @@
 FROM centos:centos6
 
-MAINTAINER jgasper@unicon.net
-
-RUN yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm \
-    && yum install -y --enablerepo=centosplus 389-ds \
-    && yum clean all
+RUN yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+RUN yum install -y --enablerepo=centosplus 389-ds
+RUN yum clean all
 
 ADD ds-setup.inf /ds-setup.inf
 ADD users.ldif /users.ldif
 
 # The 389-ds setup will fail because the hostname can't reliable be determined, so we'll bypass it and then install.
-RUN sed -i 's/checkHostname {/checkHostname {\nreturn();/g' /usr/lib64/dirsrv/perl/DSUtil.pm \
-    && setup-ds-admin.pl --silent --file /ds-setup.inf \
-    && ldapadd -H ldap:/// -f users.ldif -x -D "cn=Directory Manager" -w password \
-    && rm /*.ldif
+RUN sed -i 's/checkHostname {/checkHostname {\nreturn();/g' /usr/lib64/dirsrv/perl/DSUtil.pm
+RUN setup-ds-admin.pl --silent --file /ds-setup.inf
+RUN ldapadd -H ldap:/// -f users.ldif -x -D "cn=admin,dc=example,dc=edu" -w password
+RUN rm /*.ldif
 
 EXPOSE 389
 
