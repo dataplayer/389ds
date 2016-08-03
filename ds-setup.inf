@@ -1,4 +1,5 @@
-dminDomain = example.edu
+[General]
+AdminDomain = example.edu
 ConfigDirectoryAdminID = admin
 ConfigDirectoryAdminPwd = admin
 ConfigDirectoryLdapURL = ldap://localhost:389/o=NetscapeRoot
