@@ -10,7 +10,7 @@ ADD users.ldif /users.ldif
 # The 389-ds setup will fail because the hostname can't reliable be determined, so we'll bypass it and then install.
 RUN sed -i 's/checkHostname {/checkHostname {\nreturn();/g' /usr/lib64/dirsrv/perl/DSUtil.pm
 RUN setup-ds-admin.pl --silent --file /ds-setup.inf
-#RUN ldapadd -H ldap://localhost:389 -f users.ldif -x -D "cn=Directory Manager" -w password
+RUN ldapadd -x -D "cn=Directory Manager" -f users.ldif -w password
 #RUN rm /*.ldif
 
 EXPOSE 389
