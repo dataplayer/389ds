@@ -1,4 +1,4 @@
-FROM centos:centos6
+FROM centos:centos7
 
 RUN yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum install -y --enablerepo=centosplus 389-ds
@@ -8,10 +8,15 @@ ADD ds-setup.inf /ds-setup.inf
 ADD users.ldif /users.ldif
 
 # The 389-ds setup will fail because the hostname can't reliable be determined, so we'll bypass it and then install.
+RUN useradd ldapadmin
+RUN rm -fr /var/lock /usr/lib/systemd/system
 RUN sed -i 's/checkHostname {/checkHostname {\nreturn();/g' /usr/lib64/dirsrv/perl/DSUtil.pm
+RUN sed -i 's/updateSelinuxPolicy($inf);//g' /usr/lib64/dirsrv/perl/*
+RUN sed -i '/if (@errs = startServer($inf))/,/}/d' /usr/lib64/dirsrv/perl/*
+RUN /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir
+RUN sleep 3
 RUN setup-ds-admin.pl --silent --file /ds-setup.inf
-#RUN ldapadd -x -D "cn=Directory Manager" -f users.ldif -w password
-#RUN rm /*.ldif
+RUN ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
 
 EXPOSE 389
 
