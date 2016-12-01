@@ -18,7 +18,7 @@ RUN rm -fr /var/lock /usr/lib/systemd/system
 RUN sed -i 's/checkHostname {/checkHostname {\nreturn();/g' /usr/lib64/dirsrv/perl/DSUtil.pm
 RUN sed -i 's/updateSelinuxPolicy($inf);//g' /usr/lib64/dirsrv/perl/*
 RUN sed -i '/if (@errs = startServer($inf))/,/}/d' /usr/lib64/dirsrv/perl/*
-RUN setup-ds.pl --silent --file /ds-setup.inf
+RUN /usr/sbin/setup-ds.pl --silent --file /ds-setup.inf
 RUN /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir
 RUN sleep 3
 RUN ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
