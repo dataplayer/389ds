@@ -1,8 +1,13 @@
 FROM centos:centos7
 
-RUN yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-RUN yum install -y --enablerepo=centosplus 389-ds
-RUN yum clean all
+RUN yum install -y epel-release \
+    && yum update -y \
+    && yum install -y 389-ds-base 389-adminutil \
+    && yum clean all
+
+#RUN yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+#RUN yum install -y --enablerepo=centosplus 389-ds
+#RUN yum clean all
 
 ADD ds-setup.inf /ds-setup.inf
 ADD users.ldif /users.ldif
