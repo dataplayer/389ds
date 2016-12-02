@@ -21,7 +21,7 @@ AddSampleEntries = No
 InstallLdifFile = suggest
 RootDN = cn=Directory Manager
 RootDNPwd = password
-ServerIdentifier = testdir
+ServerIdentifier = dir
 ServerPort = 389
 SlapdConfigForMC = yes
 Suffix = dc=example,dc=edu
