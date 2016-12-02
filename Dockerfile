@@ -20,10 +20,10 @@ RUN useradd ldapadmin \
     # Do not restart at the end \
     && sed -i '/if (@errs = startServer($inf))/,/}/d' /usr/lib64/dirsrv/perl/* \
     && setup-ds.pl --silent --file /ds-setup.inf \
-    && /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir \ 
+    #&& /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir \ 
     && sleep 3 \
-    && ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
+    #&& ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
 
 EXPOSE 389
 
-CMD /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir && tail -F /var/log/dirsrv/slapd-dir/access
+#CMD /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir && tail -F /var/log/dirsrv/slapd-dir/access
