@@ -27,9 +27,9 @@ RUN useradd ldapadmin \
     && /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir \ 
     && sleep 3
 
-RUN ldapadd -H ldap:/// -f /memberof.ldif -x -D "cn=Directory Manager" -w password
 RUN ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
-RUN ldapadd -H ldap:/// -f /pwmusersandgroups.ldif -x -D "cn=Directory Manager" -w password
+#RUN ldapadd -H ldap:/// -f /memberof.ldif -x -D "cn=Directory Manager" -w password
+#RUN ldapadd -H ldap:/// -f /pwmusersandgroups.ldif -x -D "cn=Directory Manager" -w password
 
 EXPOSE 389
 
