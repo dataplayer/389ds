@@ -1,0 +1,33 @@
+dn: uid=pwmproxy,ou=People,dc=lasp,dc=colorado,dc=edu
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: pwmproxy
+sn: Proxy
+givenName: PWM
+cn: pwmproxy
+displayName: PWM Proxy
+userPassword: password
+
+dn: uid=pwmtest,ou=People,dc=lasp,dc=colorado,dc=edu
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: pwmtest
+sn: Test
+givenName: PWM
+cn: PWM Test
+displayName: PWM Test
+userPassword: password
+
+dn: cn=PwmAdmins,ou=Groups,dc=lasp,dc=colorado,dc=edu
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: PwmAdmins
+
+dn: cn=pwmContentManagers,ou=Groups,dc=lasp,dc=colorado,dc=edu
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: pwmContentManagers
