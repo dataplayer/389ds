@@ -9,7 +9,7 @@ RUN yum install -y epel-release \
 
 COPY ds-setup.inf /ds-setup.inf
 COPY users.ldif /users.ldif
-COPY membersof.ldif /membersof.ldif
+COPY memberof.ldif /memberof.ldif
 
 # The 389-ds setup will fail because the hostname can't reliable be determined, so we'll bypass it and then install.
 RUN useradd ldapadmin \
@@ -23,7 +23,7 @@ RUN useradd ldapadmin \
     && setup-ds.pl --silent --file /ds-setup.inf \
     && /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-dir \ 
     && sleep 3 \
-    && ldapadd -H ldap:/// -f /membersof.ldif -x -D "cn=Directory Manager" -w password
+    && ldapadd -H ldap:/// -f /memberof.ldif -x -D "cn=Directory Manager" -w password
     && ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
 
 EXPOSE 389
