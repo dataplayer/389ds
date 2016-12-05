@@ -10,6 +10,7 @@ RUN yum install -y epel-release \
 COPY ds-setup.inf /ds-setup.inf
 COPY users.ldif /users.ldif
 COPY memberof.ldif /memberof.ldif
+COPY 99-PWMschema.ldif /99-PWMschema.ldif
 
 # The 389-ds setup will fail because the hostname can't reliable be determined, so we'll bypass it and then install.
 RUN useradd ldapadmin \
@@ -25,6 +26,7 @@ RUN useradd ldapadmin \
     && sleep 3 \
     && ldapadd -H ldap:/// -f /memberof.ldif -x -D "cn=Directory Manager" -w password \
     && ldapadd -H ldap:/// -f /users.ldif -x -D "cn=Directory Manager" -w password
+    && ldapadd -H ldap:/// -f /99-PWMschema.ldif -x -D "cn=Directory Manager" -w password \
 
 EXPOSE 389
 
